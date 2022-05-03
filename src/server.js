@@ -4,6 +4,7 @@ import fg from 'fast-glob'
 import path from 'path'
 import hb from './hb'
 import db from './db'
+import helper from './helper'
 import pkgInfo from 'ps4-pkg-info'
 import { getPs4PkgInfo } from "@njzy/ps4-pkg-info"
 import md5File from 'md5-file'
@@ -44,22 +45,20 @@ export default {
     error(err=null){
         // deprecated
         // const win = BrowserWindow.getFocusedWindow();
-        this.getWindow().webContents.send('error', err)
         this.log(err)
     },
 
     log(msg=null){
-        this.getWindow().webContents.send('log', msg)
         console.log("Server:: " + msg)
     },
 
     notify(msg=null){
-        this.getWindow().webContents.send('notify', msg)
         this.log(msg)
     },
 
     sendFiles(){
         this.getWindow().webContents.send('server-files', this.files)
+        // #todo render a table of available files
     },
 
     setState(state=null){
@@ -116,12 +115,6 @@ export default {
             })
         })
 
-        // sample icon0.png
-        this.host.router.get('/icon0.png', function(request, response){
-            let image = path.resolve(__dirname, process.env.QUASAR_PUBLIC_FOLDER) + '/icon0.png'
-            response.status(200).download(image, 'icon0.png')
-        })
-
         // storage database
         this.host.router.get('/store.db', (request, response) => {
             // console.log("HB-Store Download store.db Request", request)
@@ -156,7 +149,7 @@ export default {
         // load server binaries
         for (const asset of ['homebrew.elf', 'homebrew.elf.sig', 'remote.md5'])
           this.host.router.get('/update/' + asset, function(request, response){
-              let file = app.getPath('userData') + '/bin/' + asset
+              let file = helper.getFile('bin/' + asset)
               response.status(200).download(file, asset)
           })
     },

@@ -27,4 +27,8 @@ export default {
         });
         return ifaces
     },
+
+    getFile(asset=''){
+        return path.join(path.dirname(process.execPath), asset)
+    },
 }

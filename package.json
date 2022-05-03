@@ -4,14 +4,21 @@
   "description": "HB-Store CDN Server CLI Edition",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel ./src --out-dir build && pkg .",
-    "dev": "babel ./src --out-dir build --watch"
+    "build": "npm run clean && babel ./src --out-dir build && pkg .",
+    "dev:esm": "tsc --target ESNext --module ES6 --outDir build",
+    "dev": "npm run clean && babel ./src --out-dir build --watch",
+    "clean": "rimraf build"
   },
   "author": "Gkiokan Sali <support@gkiokan.net>",
   "bin": "build/app.js",
   "pkg": {
-    "scripts": "build/**/*.js",
-    "assets": ["assets/**/*", "node_modules/**/*"],
+    "scripts": [
+      "build/**/*.js"
+    ],
+    "assets": [
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
     "targets": [
       "node14-macos-x64"
     ],
@@ -24,19 +31,26 @@
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
+    "@babel/preset-typescript": "^7.16.7",
     "@njzy/ps4-pkg-info": "^0.1.0",
     "better-sqlite3": "^7.5.1",
     "express": "^4.18.1",
     "fast-glob": "^3.2.11",
     "md5-file": "^5.0.0",
     "normalize-path": "^3.0.0",
-    "os": "^0.1.2"
+    "os": "^0.1.2",
+    "rimraf": "^3.0.2"
   },
   "babel": {
     "presets": [
+      "@babel/preset-typescript",
       "@babel/preset-env"
     ]
   },
-  "target": "module",
-  "module": "commonjs"
+  "target": "ESNext",
+  "module": "ES6",
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "typescript": "^4.6.4"
+  }
 }
