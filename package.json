@@ -4,19 +4,21 @@
   "description": "HB-Store CDN Server CLI Edition",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run dev && pkg .",
+    "build": "babel ./src --out-dir build && pkg .",
     "dev": "babel ./src --out-dir build --watch"
   },
   "author": "Gkiokan Sali <support@gkiokan.net>",
   "bin": "build/app.js",
   "pkg": {
     "scripts": "build/**/*.js",
-    "assets": "node_modules/**/*",
+    "assets": ["assets/**/*", "node_modules/**/*"],
     "targets": [
       "node14-macos-x64"
     ],
     "outputPath": "release",
-    "options": ["experimental-modules"]
+    "options": [
+      "experimental-modules"
+    ]
   },
   "dependencies": {
     "@babel/cli": "^7.17.10",
@@ -25,12 +27,15 @@
     "@njzy/ps4-pkg-info": "^0.1.0",
     "better-sqlite3": "^7.5.1",
     "express": "^4.18.1",
+    "fast-glob": "^3.2.11",
     "md5-file": "^5.0.0",
     "normalize-path": "^3.0.0",
     "os": "^0.1.2"
   },
   "babel": {
-    "presets": ["@babel/preset-env"]
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
   "target": "module",
   "module": "commonjs"
