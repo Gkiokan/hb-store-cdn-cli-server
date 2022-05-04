@@ -5,6 +5,14 @@ import ini from 'ini'
 
 export default {
 
+    data: {
+        default: {
+            host: '',
+            port: '',
+            basePath: '',
+        }
+    },
+
     getInterfaces(){
         let ifaces = [];
         Object.keys(os.networkInterfaces()).forEach(function (ifname) {
@@ -54,14 +62,15 @@ export default {
     loadConfig(){
         let file = this.getFile('config.ini')
         let config = ini.parse(fs.readFileSync(file, 'utf-8'))
-        return config
+
+        return { ...this.default, ...config }
     },
 
     saveConfig(config){
         try {
             let file = this.getFile('config.ini')
-            console.log("Save config to ", file)
-            fs.writeFileSync(file, ini.stringify(config))
+            fs.writeFileSync(file, ini.stringify({ ...this.default, ...config }))
+            console.log("Saved config to ", file)
         }
         catch(e){
             console.log(e)

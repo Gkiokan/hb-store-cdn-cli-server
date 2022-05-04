@@ -12,11 +12,11 @@ export default {
             {
                 type: 'list',
                 name: "run",
-                message: "Setup HB-Store CDN Server",
+                message: "## Menu ## HB-Store CDN CLI Server",
                 choices: [
                     {
                         value: "start",
-                        name: "Start the server as preconfigured"
+                        name: "Start the server as pre-configured"
                     },
                     new inquirer.Separator(),
                     {
@@ -35,7 +35,13 @@ export default {
                     {
                         value: "download-bin",
                         name: "Force re-download server binaries"
-                    }
+                    },
+                    new inquirer.Separator(),
+                    {
+                        value: "quit",
+                        name: "Quit Application."
+                    },
+                    new inquirer.Separator(),
                 ]
             }
           ])
@@ -56,10 +62,11 @@ export default {
           }
 
           if(menu.run == 'start'){
+              let config = helper.loadConfig()
               server.start({
-                    ip: "127.0.0.1",
-                    port: 6449,
-                    basePath: '.'
+                    ip: config.host,
+                    port: config.port,
+                    basePath: config.basePath,
                 })
           }
     },
@@ -68,7 +75,7 @@ export default {
           let interfaceChoices = helper.getInterfaceChoices(true)
           let defaultHost = interfaceChoices[0].value
 
-          let basePath = await inquirer
+          let config = await inquirer
               .prompt([
                   {
                       type: 'list',
@@ -103,13 +110,20 @@ export default {
               });
 
 
-          if(basePath.host == 'custom'){
-              basePath.host = basePath.custom
-              delete basePath.custom
+          if(config.host == 'custom'){
+              config.host = config.custom
           }
 
-          return basePath
+          let finalConfig = {
+              host: config.host,
+              port: config.port,
+              basePath: config.basePath,
+          }
+
+          return finalConfig
     },
+
+
 
     showCurrentConfig(){
         let config = helper.loadConfig()
