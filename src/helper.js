@@ -28,6 +28,18 @@ export default {
         return ifaces
     },
 
+    getInterfaceChoices(addCustom=false){
+        let interfaces = []
+        this.getInterfaces().map( iface => {
+            interfaces.push({ value: iface.ip, name: iface.title })
+        })
+
+        if(addCustom)
+          interfaces.push({ value: 'custom', name: 'Use a custom Host IP or Domain' })
+
+        return interfaces
+    },
+
     getFile(asset=''){
         return path.join(path.dirname(process.execPath), asset)
     },
