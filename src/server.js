@@ -58,17 +58,18 @@ export default {
     },
 
     sendFiles(){
-        this.getWindow().webContents.send('server-files', this.files)
+        // this.getWindow().webContents.send('server-files', this.files)
         // #todo render a table of available files
+        console.log("Found files", this.files)
     },
 
     setState(state=null){
-        this.getWindow().send('server-state', state)
+        // this.getWindow().send('server-state', state)
         this.log("Set Server State to " + state)
     },
 
     updatePS4IP(ip){
-        this.getWindow().send('update-ps4-ip', ip)
+        // this.getWindow().send('update-ps4-ip', ip)
         this.log("I guess we have a ps4 IP here " + ip)
     },
 
