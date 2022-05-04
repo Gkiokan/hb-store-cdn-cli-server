@@ -37,6 +37,7 @@
     "@njzy/ps4-pkg-info": "^0.1.0",
     "@types/inquirer": "^8.2.1",
     "better-sqlite3": "^7.5.1",
+    "cli-table": "^0.3.11",
     "express": "^4.18.1",
     "fast-glob": "^3.2.11",
     "ini": "^3.0.0",

@@ -7,12 +7,12 @@ import db from './db'
 import server from './server'
 import cli from './cli'
 
+var state = {
+  server: 'stopped'
+}
+
 let args = process.argv.slice(2)
 console.log("Params", args)
-
-if(args["--path"])
-  console.log("we have a base path")
-
 
 if(args.includes('setup'))
   cli.run()
