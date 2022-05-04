@@ -1,6 +1,7 @@
 import helper from './helper'
 import server from './server'
 import inquirer from 'inquirer'
+import fs from 'fs'
 
 inquirer.registerPrompt('file-tree-selection', require('inquirer-file-tree-selection-prompt'))
 
@@ -18,6 +19,10 @@ export default {
                         name: "Start the server as preconfigured"
                     },
                     new inquirer.Separator(),
+                    {
+                        value: "loadConfig",
+                        name: "Show me the current Configuration"
+                    },
                     {
                         value: "setup",
                         name: "Generate new Config file for Server"
@@ -42,6 +47,12 @@ export default {
           if(menu.run == 'setup'){
               let config = await this.configure()
               console.log("Final config file", config)
+
+              helper.saveConfig(config)
+          }
+
+          if(menu.run == 'loadConfig'){
+              this.showCurrentConfig()
           }
 
           if(menu.run == 'start'){
@@ -98,6 +109,11 @@ export default {
           }
 
           return basePath
+    },
+
+    showCurrentConfig(){
+        let config = helper.loadConfig()
+        console.log("Loaded Config", config)
     }
 
 }

@@ -1,4 +1,7 @@
 import os from 'os'
+import fs from 'fs'
+import path from 'path'
+import ini from 'ini'
 
 export default {
 
@@ -43,4 +46,26 @@ export default {
     getFile(asset=''){
         return path.join(path.dirname(process.execPath), asset)
     },
+
+    setConfig(config){
+        process.env.config = config
+    },
+
+    loadConfig(){
+        let file = this.getFile('config.ini')
+        let config = ini.parse(fs.readFileSync(file, 'utf-8'))
+        return config
+    },
+
+    saveConfig(config){
+        try {
+            let file = this.getFile('config.ini')
+            console.log("Save config to ", file)
+            fs.writeFileSync(file, ini.stringify(config))
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
 }
