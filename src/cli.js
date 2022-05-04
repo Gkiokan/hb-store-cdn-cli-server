@@ -177,25 +177,25 @@ export default {
     async server(){
         console.log("Server is: ", state.server)
         let menu = await inquirer.prompt([
-            {
-                type: 'list',
-                name: "run",
-                message: "## Server ## HB-Store CDN CLI Server",
-                choices: [
-                    {
-                        value: "start",
-                        name: "Start the server"
-                    },
-                    {
-                        value: "restart",
-                        name: "Restart the server"
-                    },
-                    {
-                        value: "start",
-                        name: "Stop the server"
-                    },
-                ]
-            }
+              {
+                  type: 'list',
+                  name: "run",
+                  message: "## Server ## HB-Store CDN CLI Server",
+                  choices: [
+                      {
+                          value: "start",
+                          name: "Start the server"
+                      },
+                      {
+                          value: "restart",
+                          name: "Restart the server"
+                      },
+                      {
+                          value: "start",
+                          name: "Stop the server"
+                      },
+                  ]
+              }
           ])
           .catch((error) => {
               console.log(error)
