@@ -60,9 +60,8 @@ export default {
           // console.log("Run command", run)
           if(menu.run == 'setup'){
               let config = await this.configure()
-              console.log("Final config file", config)
-
               helper.saveConfig(config)
+              this.showCurrentConfig()
           }
 
           if(menu.run == 'loadConfig'){
@@ -71,6 +70,7 @@ export default {
 
           if(menu.run == 'initConfig'){
               helper.init()
+              this.run()
           }
 
           if(menu.run == 'start'){

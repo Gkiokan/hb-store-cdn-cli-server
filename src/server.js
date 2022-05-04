@@ -6,6 +6,7 @@ import path from 'path'
 import hb from './hb'
 import db from './db'
 import cli from './cli'
+import clc from 'cli-color'
 import helper from './helper'
 import pkgInfo from 'ps4-pkg-info'
 // import { getPs4PkgInfo } from "@njzy/ps4-pkg-info"
@@ -48,7 +49,7 @@ export default {
     error(err=null){
         // deprecated
         // const win = BrowserWindow.getFocusedWindow();
-        this.log(err)
+        this.log(clc.red(err))
     },
 
     log(msg=null){
@@ -56,7 +57,7 @@ export default {
     },
 
     notify(msg=null){
-        this.log(msg)
+        this.log(clc.green(msg))
     },
 
     sendFiles(){
@@ -160,12 +161,21 @@ export default {
     },
 
     async addFilesFromBasePath(){
-        this.log("Search for pkg files in basePath at " + this.basePath)
 
-        if (!fs.existsSync(this.basePath)) {
-            return console.log("BasePath doesn't exist!")
+        try {
+            let folder = fs.statSync(this.basePath)
+            let isFolder = folder.isDirectory()
+
+            if(!isFolder)
+              return this.error("BasePath does exist but doesn't seem to be a valid folder.")
+        }
+        catch (err) {
+           if (err.code === 'ENOENT' || err.code === 'ENOTDIR') {
+              return this.error("BasePath folder doesn't exist");
+           }
         }
 
+        this.log("Search for pkg files in basePath at " + this.basePath)
         let patchedBasePath = normalize(this.basePath)
         let toRemoveBasePath = (patchedBasePath.charAt(0) == "/") ? patchedBasePath.substr(1).replace(/[^a-zA-Z0-9-_./]/g, '') : patchedBasePath.replace(/[^a-zA-Z0-9-_./]/g, '')
 
@@ -195,7 +205,7 @@ export default {
                 i = i+1
             }
             catch(e){
-                console.log("Error", e)
+                this.error("Error", e)
             }
 
             // console.log("End file ", file)
@@ -266,7 +276,7 @@ export default {
             this.setState('stopped')
 
             if(e.code === 'EADDRINUSE'){
-              let error = "Port <b>" + this.port + "</b> is already in use. <br>Choose another port and restart the Server"
+              let error = "Port " + this.port + " is already in use. Choose another port and restart the Server"
               this.error(error)
             }
             else {
