@@ -11,43 +11,43 @@ export default {
 
     async run(){
         let menu = await inquirer.prompt([
-            {
-                type: 'list',
-                name: "run",
-                loop: false,
-                pageSize: 10,
-                message: "## Menu ## HB-Store CDN CLI Server",
-                choices: [
-                    {
-                        value: "start",
-                        name: "Start the server as pre-configured"
-                    },
-                    new inquirer.Separator(),
-                    {
-                        value: "loadConfig",
-                        name: "[Config] Show me the current Configuration",
-                    },
-                    {
-                        value: "setup",
-                        name: "[Config] Generate new Config file for Server",
-                    },
-                    new inquirer.Separator(),
-                    {
-                        value: "check-server-binaries",
-                        name: "[Server] Check Server Binaries",
-                    },
-                    {
-                        value: "download-bin",
-                        name: "[Server] Force re-download server binaries",
-                    },
-                    new inquirer.Separator(),
-                    {
-                        value: "quit",
-                        name: "Quit Application."
-                    },
-                    new inquirer.Separator(),
-                ]
-            }
+              {
+                  type: 'list',
+                  name: "run",
+                  loop: false,
+                  pageSize: 10,
+                  message: "## Menu ## HB-Store CDN CLI Server",
+                  choices: [
+                      {
+                          value: "start",
+                          name: "Start the server as pre-configured"
+                      },
+                      new inquirer.Separator(),
+                      {
+                          value: "loadConfig",
+                          name: "[Config] Show me the current Configuration",
+                      },
+                      {
+                          value: "setup",
+                          name: "[Config] Generate new Config file for Server",
+                      },
+                      new inquirer.Separator(),
+                      {
+                          value: "check-server-binaries",
+                          name: "[Server] Check Server Binaries",
+                      },
+                      {
+                          value: "download-bin",
+                          name: "[Server] Force re-download server binaries",
+                      },
+                      new inquirer.Separator(),
+                      {
+                          value: "quit",
+                          name: "Quit Application."
+                      },
+                      new inquirer.Separator(),
+                  ]
+              }
           ])
           .catch((error) => {
               console.log(error)
@@ -73,6 +73,7 @@ export default {
                     basePath: config.basePath,
                 })
           }
+
     },
 
     async configure(){
@@ -204,7 +205,7 @@ export default {
     showCurrentConfig(){
         let config = helper.loadConfig()
         console.log("Loaded Config")
-        
+
         let table = new Table({
             head: ['key', 'value']
         })
