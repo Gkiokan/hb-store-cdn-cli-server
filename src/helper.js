@@ -10,6 +10,7 @@ export default {
             host: '',
             port: '',
             basePath: '',
+            binVersion: '0.00'
         }
     },
 
@@ -82,6 +83,19 @@ export default {
         catch(e){
             console.log(e)
         }
+    },
+
+    init(){
+        let configFile = path.join(path.dirname(process.execPath), 'config.ini')
+
+        if(!fs.existsSync(configFile)){
+            this.saveConfig(this.data.default)
+            console.log("[init] empty config.ini has been creatd")
+        }
+        else {
+            console.log("[init] config.ini already exists")
+        }
+
     }
 
 }

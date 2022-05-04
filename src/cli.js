@@ -15,14 +15,18 @@ export default {
                   type: 'list',
                   name: "run",
                   loop: false,
-                  pageSize: 10,
+                  pageSize: 12,
                   message: "## Menu ## HB-Store CDN CLI Server",
                   choices: [
                       {
                           value: "start",
-                          name: "Start the server as pre-configured"
+                          name: "[Server] Start the server as pre-configured"
                       },
                       new inquirer.Separator(),
+                      {
+                          value: "initConfig",
+                          name: "[Config] Initialize empty config file",
+                      },
                       {
                           value: "loadConfig",
                           name: "[Config] Show me the current Configuration",
@@ -34,11 +38,11 @@ export default {
                       new inquirer.Separator(),
                       {
                           value: "check-server-binaries",
-                          name: "[Server] Check Server Binaries",
+                          name: "[Bin] Check Server Binaries",
                       },
                       {
                           value: "download-bin",
-                          name: "[Server] Force re-download server binaries",
+                          name: "[Bin] Force re-download server binaries",
                       },
                       new inquirer.Separator(),
                       {
@@ -63,6 +67,10 @@ export default {
 
           if(menu.run == 'loadConfig'){
               this.showCurrentConfig()
+          }
+
+          if(menu.run == 'initConfig'){
+              helper.init()
           }
 
           if(menu.run == 'start'){
