@@ -1,5 +1,6 @@
 import express from 'express'
 import http from 'http'
+import fs from 'fs'
 import fg from 'fast-glob'
 import path from 'path'
 import hb from './hb'
@@ -160,6 +161,11 @@ export default {
 
     async addFilesFromBasePath(){
         this.log("Search for pkg files in basePath at " + this.basePath)
+
+        if (!fs.existsSync(this.basePath)) {
+            return console.log("BasePath doesn't exist!")
+        }
+
         let patchedBasePath = normalize(this.basePath)
         let toRemoveBasePath = (patchedBasePath.charAt(0) == "/") ? patchedBasePath.substr(1).replace(/[^a-zA-Z0-9-_./]/g, '') : patchedBasePath.replace(/[^a-zA-Z0-9-_./]/g, '')
 

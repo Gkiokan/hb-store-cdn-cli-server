@@ -68,17 +68,17 @@ export default {
             config = ini.parse(fs.readFileSync(file, 'utf-8'))
         }
         catch(e){
-            console.log("Couldn't load config.ini. Please run the Setup or make a config file.")
+            console.log("[Config] Couldn't load config.ini. Please run the Setup or make a config file.")
         }
 
-        return { ...this.default, ...config }
+        return { ...this.data.default, ...config }
     },
 
     saveConfig(config){
         try {
             let file = this.getFile('config.ini')
             fs.writeFileSync(file, ini.stringify({ ...this.default, ...config }) )
-            console.log("Saved config to ", file)
+            console.log("[Config] Saved config to ", file)
         }
         catch(e){
             console.log(e)
