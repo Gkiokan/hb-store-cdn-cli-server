@@ -17,6 +17,8 @@ global.state = state
 let args = process.argv.slice(2)
 // console.log("Params", args)
 
+// #todo to be done https://www.npmjs.com/package/clui
+
 if(args.includes('setup'))
   cli.run()
 
