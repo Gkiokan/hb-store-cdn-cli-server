@@ -63,10 +63,12 @@ export default {
               let config = await this.configure()
               helper.saveConfig(config)
               this.showCurrentConfig()
+              this.run()
           }
 
           if(menu.run == 'loadConfig'){
               this.showCurrentConfig()
+              this.run()
           }
 
           if(menu.run == 'initConfig'){
