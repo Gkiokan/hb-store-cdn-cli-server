@@ -173,8 +173,12 @@ export default {
             let folder = fs.statSync(this.basePath)
             let isFolder = folder.isDirectory()
 
-            if(!isFolder)
-              return this.error("BasePath does exist but doesn't seem to be a valid folder.")
+            if(!isFolder){
+              this.error("BasePath does exist but doesn't seem to be a valid folder.")
+              cli.run()
+              return
+            }
+
         }
         catch (err) {
            if (err.code === 'ENOENT' || err.code === 'ENOTDIR') {
