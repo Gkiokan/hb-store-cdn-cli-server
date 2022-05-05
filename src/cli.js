@@ -66,8 +66,12 @@ export default {
 
           // console.log("Run command", run)
           if(menu.run == 'setup'){
-              let config = await this.configure()
-              helper.saveConfig(config)
+              let preConfig = helper.loadConfig()
+              let newConfig = await this.configure()
+
+              let finalConfig = { ...preConfig, ...newConfig }
+
+              helper.saveConfig(finalConfig)
               this.showCurrentConfig()
               this.run()
           }
