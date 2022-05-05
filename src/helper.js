@@ -2,6 +2,7 @@ import os from 'os'
 import fs from 'fs'
 import path from 'path'
 import ini from 'ini'
+import clc from 'cli-color'
 
 export default {
 
@@ -96,6 +97,20 @@ export default {
             console.log("[init] config.ini already exists")
         }
 
+    },
+
+    getServerState(){
+        if(global.state.server == 'running')
+          return clc.green(global.state.server)
+
+        if(global.state.server == 'stopped')
+          return clc.red(global.state.server)
+
+        return clc.cyan(global.state.server)
+    },
+
+    getCDN(config){
+        return clc.bgWhite.black('CDN Address: http://' + config.host + ':' + config.port + ' ')
     }
 
 }

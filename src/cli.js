@@ -4,6 +4,7 @@ import inquirer from 'inquirer'
 import Table from 'cli-table'
 import fs from 'fs'
 import path from 'path'
+import clc from 'cli-color'
 
 inquirer.registerPrompt('file-tree-selection', require('inquirer-file-tree-selection-prompt'))
 
@@ -75,11 +76,7 @@ export default {
 
           if(menu.run == 'start'){
               let config = helper.loadConfig()
-              server.start({
-                    ip: config.host,
-                    port: config.port,
-                    basePath: config.basePath,
-                })
+              server.start(config)
           }
 
     },
@@ -183,13 +180,22 @@ export default {
     },
 
     async server(){
-        console.log("Server is: ", global.state.server)
+        let config = helper.loadConfig()
         let menu = await inquirer.prompt([
               {
                   type: 'list',
                   name: "run",
                   message: "## Server ## HB-Store CDN CLI Server",
                   choices: [
+                      {
+                          value: "state",
+                          name: "CDN Server is: " + helper.getServerState(),
+                      },
+                      {
+                          value: "cdn",
+                          name: helper.getCDN(config),
+                      },
+                      new inquirer.Separator(),
                       {
                           value: "start",
                           name: "[Server] Start the server"
@@ -211,6 +217,15 @@ export default {
 
           if(menu.run == 'stop')
             server.stop()
+
+          if(menu.run == 'start')
+            server.start(config)
+
+          if(menu.run == 'restart')
+            server.restart(config)
+
+          if(menu.run == 'state' || menu.run == 'cdn')
+            this.server()
     },
 
     showCurrentConfig(){

@@ -41,7 +41,7 @@ export default {
     },
 
     setConfig(config){
-        this.ip       = config.ip
+        this.ip       = config.host
         this.port     = config.port
         this.basePath = config.basePath
     },
@@ -69,6 +69,8 @@ export default {
 
         else
           this.error("No files found in basePath! Check your basePath and put sommething in!")
+
+        cli.server()
     },
 
     setState(state=null){
@@ -257,6 +259,12 @@ export default {
     async start(config){
         this.setConfig(config)
 
+        if(global.state.server == 'running'){
+            this.log(clc.magenta("Server is already started. Restarting server"))
+            this.restart(config)
+            return
+        }
+
         if(!this.host.app){
             this.createServer()
         }
@@ -290,22 +298,26 @@ export default {
         })
     },
 
-    async stop(){
+    async stop(restart=false, config={}){
         this.log('Closing Server')
 
         if(this.host.server)
           await this.host.server.close(() => {
               this.log('Server closed')
               this.setState('stopped')
+
+              if(restart)
+                this.start(config)
+              else
+                cli.run()
           })
         else
           this.error("Server can not be closed. Server Object does't exist")
     },
 
-    restart(config){
+    async restart(config){
         this.log("Server restarting triggered")
-        this.stop()
-        this.start(config)
+        this.stop(true, config)
     },
 
 }
