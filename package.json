@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run clean && npm run dist && pkg .",
+    "build:all": "npm run clean && npm run dist && pkg . -t linux,macos,win",
     "dist:es5": "babel ./src --out-dir build",
     "dist": "tsc --rootDir src --target ES2020 --module commonjs --outDir build",
     "dev": "npm run clean && npm run dist -- --watch",
