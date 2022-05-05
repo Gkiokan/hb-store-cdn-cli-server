@@ -99,7 +99,7 @@ export default {
 
         if(!fs.existsSync(configFile)){
             this.saveConfig(this.data.default)
-            this.notify("empty config.ini has been creatd", 'Main')
+            this.notify("empty config.ini has been created", 'Main')
         }
         else {
             this.error("config.ini already exists", 'Main')

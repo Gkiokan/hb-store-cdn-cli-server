@@ -19,13 +19,18 @@ let args = process.argv.slice(2)
 
 // #todo to be done https://www.npmjs.com/package/clui
 
-if(args.includes('setup'))
+if(args.includes('setup')){
   cli.run()
+}
 
-if(args.length == 0)
-  console.log("[Info] No input specified. Running setup command")
-  console.log(" ")
+if(args.includes('init')){
+  helper.init()
+}
+
+if(args.length == 0){
+  // console.log("[Info] No input specified. Running setup command")
   cli.run()
+}
 
 
 

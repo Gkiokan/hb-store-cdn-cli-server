@@ -85,21 +85,30 @@ export default {
 
         if(compare == 1){
           this.notify("Your current Binary are higher then the release")
-          cli.run()
         }
 
         if(compare == 0){
           this.notify("Your Server Binaries are up to date")
-          cli.run()
         }
 
         if(compare == -1){
           this.updateAvailable = true
           this.newUpdateAvailableVersion = version
-          this.log("New Server Binaries are available. Update in progress")
+          this.notify("New Server Binaries are available. Update in progress")
           await this.downloadServerBinaries(config, assets, version)
-          cli.run()
         }
+    },
+
+    async forceServerBinariesDownload(){
+        let release = await this.getRelease()
+        let version = this.getVersion(release)
+        let assets  = this.getAssets(release)
+        let config  = helper.loadConfig()
+
+        this.updateAvailable = true
+        this.newUpdateAvailableVersion = version
+        this.notify("Force re-download Server Binaries. Update in progress")
+        await this.downloadServerBinaries(config, assets, version)
     },
 
     async downloadServerBinaries(config, assets, version){
@@ -113,10 +122,11 @@ export default {
 
         this.log("Found " + files.length + " to download. Downloading ...")
 
-        await files.map( async file => fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) )
+        await files.map( async file => await fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) )
         config.binVersion = version
         helper.saveConfig(config)
 
         this.notify("Download finished.")
     },
+
 }

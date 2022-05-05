@@ -6,6 +6,7 @@ import inquirer from 'inquirer'
 import fs from 'fs'
 import path from 'path'
 import clc from 'cli-color'
+import clear from 'clear'
 
 inquirer.registerPrompt('file-tree-selection', require('inquirer-file-tree-selection-prompt'))
 
@@ -63,6 +64,7 @@ export default {
           .catch((error) => {
               console.log(error)
           });
+          console.log(" ")
 
           // console.log("Run command", run)
           if(menu.run == 'setup'){
@@ -72,17 +74,17 @@ export default {
               let finalConfig = { ...preConfig, ...newConfig }
 
               helper.saveConfig(finalConfig)
-              this.showCurrentConfig()
+              await this.showCurrentConfig()
               this.run()
           }
 
           if(menu.run == 'loadConfig'){
-              this.showCurrentConfig()
+              await this.showCurrentConfig()
               this.run()
           }
 
           if(menu.run == 'initConfig'){
-              helper.init()
+              await helper.init()
               this.run()
           }
 
@@ -92,9 +94,14 @@ export default {
           }
 
           if(menu.run == 'check-server-binaries'){
-              bin.checkServerBinaries()
+              await bin.checkServerBinaries()
+              this.run()
           }
 
+          if(menu.run == 'download-bin'){
+              await bin.forceServerBinariesDownload()
+              this.run()
+          }
     },
 
     async configure(){
@@ -244,7 +251,7 @@ export default {
             this.server()
     },
 
-    showCurrentConfig(){
+    async showCurrentConfig(){
         let config = helper.loadConfig()
         this.log("Loaded Config", 'Main')
 
@@ -257,7 +264,7 @@ export default {
         console.log(table.toString())
     },
 
-    showList(files=[]){
+    async showList(files=[]){
         let table = helper.getTable([ 'id', 'name', 'version', 'size' ])
 
         files.map( file => {
