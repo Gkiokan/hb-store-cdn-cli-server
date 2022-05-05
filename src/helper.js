@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import ini from 'ini'
 import clc from 'cli-color'
+import log from './log'
 
 export default {
 
@@ -14,6 +15,11 @@ export default {
             binVersion: '0.00'
         }
     },
+
+    module: 'Main',
+    log: log.log,
+    error: log.error,
+    notify: log.notify,
 
     getInterfaces(){
         let ifaces = [];
@@ -57,8 +63,8 @@ export default {
         return path.join(path.dirname(process.execPath), asset)
     },
 
-    setConfig(config){
-        process.env.config = config
+    getPath(path=''){
+        return this.getFile(path)
     },
 
     loadConfig(){
@@ -79,7 +85,7 @@ export default {
         try {
             let file = this.getFile('config.ini')
             fs.writeFileSync(file, ini.stringify({ ...this.default, ...config }) )
-            console.log("[Config] Saved config to ", file)
+            console.log("[Config] Saved config to " + file)
         }
         catch(e){
             console.log(e)

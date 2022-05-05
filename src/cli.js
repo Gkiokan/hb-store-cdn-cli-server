@@ -1,5 +1,6 @@
 import helper from './helper'
 import server from './server'
+import bin from './bin'
 import inquirer from 'inquirer'
 import Table from 'cli-table'
 import fs from 'fs'
@@ -79,6 +80,10 @@ export default {
           if(menu.run == 'start'){
               let config = helper.loadConfig()
               server.start(config)
+          }
+
+          if(menu.run == 'check-server-binaries'){
+              bin.checkServerBinaries()
           }
 
     },
@@ -245,7 +250,6 @@ export default {
         console.log(table.toString())
     },
 
-
     showList(files=[]){
         let table = new Table({
             head: [ 'id', 'name', 'version', 'size' ]
@@ -256,6 +260,7 @@ export default {
         })
 
         console.log(table.toString())
-    }
+    },
+
 
 }

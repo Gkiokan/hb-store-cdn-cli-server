@@ -6,6 +6,7 @@ import path from 'path'
 import hb from './hb'
 import db from './db'
 import cli from './cli'
+import log from './log'
 import clc from 'cli-color'
 import helper from './helper'
 import pkgInfo from 'ps4-pkg-info'
@@ -25,16 +26,10 @@ export default {
         router: null,
     },
 
-    getWindow(){
-        // #todo
-        return { 
-            webContents: {
-                send(ch, msg){
-                    console.log(ch, msg)
-                }
-            }
-        }
-    },
+    module: 'Server',
+    log: log.log,
+    error: log.error,
+    notify: log.notify,
 
     getBaseURI(){
         return 'http://' + this.ip + ':' + this.port
@@ -44,20 +39,6 @@ export default {
         this.ip       = config.host
         this.port     = config.port
         this.basePath = config.basePath
-    },
-
-    error(err=null){
-        // deprecated
-        // const win = BrowserWindow.getFocusedWindow();
-        this.log(clc.red(err))
-    },
-
-    log(msg=null){
-        console.log("Server:: " + msg)
-    },
-
-    notify(msg=null){
-        this.log(clc.green(msg))
     },
 
     sendFiles(){
