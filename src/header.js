@@ -16,7 +16,9 @@ export default {
         this.text("CDN Server")
         console.log("------------------------------------------------------")
         console.log(" Version: " + pkg.version)
-        console.log(" Made by Gkiokan.NET")
+        console.log(" HB-Store CDN Server [CLI version] Made by Gkiokan.NET")
+        // console.log(" Hb-Store (PS4) made by LightningMods")
+        // console.log(" Required: HB-Store R2 on your PS4 from https://pkg-zone.com")
         console.log("------------------------------------------------------")
     },
 
