@@ -77,7 +77,7 @@ export default {
             config = ini.parse(fs.readFileSync(file, 'utf-8'))
         }
         catch(e){
-            this.log("Couldn't load config.ini. Please run the Setup or make a config file.")
+            this.error("Couldn't load config.ini. Please run the Setup or make a config file.")
         }
 
         return { ...this.data.default, ...config }
@@ -87,7 +87,7 @@ export default {
         try {
             let file = this.getFile('config.ini')
             fs.writeFileSync(file, ini.stringify({ ...this.default, ...config }) )
-            this.log("Saved config to " + file, 'Config')
+            this.notify("Saved config to " + file, 'Config')
         }
         catch(e){
             this.log(e)
@@ -99,10 +99,10 @@ export default {
 
         if(!fs.existsSync(configFile)){
             this.saveConfig(this.data.default)
-            this.log("empty config.ini has been creatd", 'Main')
+            this.notify("empty config.ini has been creatd", 'Main')
         }
         else {
-            this.log("config.ini already exists", 'Main')
+            this.error("config.ini already exists", 'Main')
         }
     },
 
