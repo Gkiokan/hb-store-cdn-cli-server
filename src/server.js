@@ -64,12 +64,17 @@ export default {
         // this.getWindow().webContents.send('server-files', this.files)
         // #todo render a table of available files
         // console.log("Found files", this.files)
-        cli.showList(this.files)
+        if(this.files.count)
+          cli.showList(this.files)
+
+        else
+          this.error("No files found in basePath! Check your basePath and put sommething in!")
     },
 
     setState(state=null){
         // this.getWindow().send('server-state', state)
-        this.log("Set Server State to " + state)
+        global.state.server = state
+        this.log(clc.cyan("Set Server State to " + state))
     },
 
     updatePS4IP(ip){

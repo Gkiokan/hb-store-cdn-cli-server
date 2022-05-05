@@ -183,7 +183,7 @@ export default {
     },
 
     async server(){
-        console.log("Server is: ", state.server)
+        console.log("Server is: ", global.state.server)
         let menu = await inquirer.prompt([
               {
                   type: 'list',
@@ -192,15 +192,15 @@ export default {
                   choices: [
                       {
                           value: "start",
-                          name: "Start the server"
+                          name: "[Server] Start the server"
                       },
                       {
                           value: "restart",
-                          name: "Restart the server"
+                          name: "[Server] Restart the server"
                       },
                       {
-                          value: "start",
-                          name: "Stop the server"
+                          value: "stop",
+                          name: "[Server] Stop the server"
                       },
                   ]
               }
@@ -208,6 +208,9 @@ export default {
           .catch((error) => {
               console.log(error)
           });
+
+          if(menu.run == 'stop')
+            server.stop()
     },
 
     showCurrentConfig(){
