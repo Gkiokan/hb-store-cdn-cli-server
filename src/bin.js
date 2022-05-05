@@ -84,12 +84,12 @@ export default {
         let compare = this.checkVersion(config.binVersion, version)
 
         if(compare == 1){
-          this.log("Your current Binary are higher then the release")
+          this.notify("Your current Binary are higher then the release")
           cli.run()
         }
 
         if(compare == 0){
-          this.log("Your Server Binaries are up to date")
+          this.notify("Your Server Binaries are up to date")
           cli.run()
         }
 
