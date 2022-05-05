@@ -11,8 +11,12 @@ export default {
         this.log(clc.green(msg))
     },
 
-    log(msg=null){
-        console.log(""+this.module + " " + msg)
+    log(msg=null, module=null, space=false){
+        let finalModule = module ? module : this.module
+        console.log("["+ finalModule + "] " + msg)
+
+        if(space)
+          console.log(" ")
     },
 
 }

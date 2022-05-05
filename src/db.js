@@ -1,30 +1,16 @@
 import fs from 'fs'
 import path from 'path'
+import log from './log'
 import Database from 'better-sqlite3';
 
 let db;
 
 export default {
 
-      getWindow(){
-          // #todo
-          return { 
-              webContents: {
-                  send(ch, msg){
-                      console.log(ch, msg)
-                  }
-              }
-          }
-      },
-
-      error(err=null){
-          this.log(err)
-      },
-
-      log(msg=null){
-          console.log("Server:: " + msg)
-      },
-
+      module: 'Server',
+      log: log.log,
+      error: log.error,
+      notify: log.notify,
 
       getCleanStorePath(){
           return path.join(__dirname, '../assets/store.clean.db')

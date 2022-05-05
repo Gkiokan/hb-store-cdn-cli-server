@@ -1,8 +1,8 @@
 import helper from './helper'
 import server from './server'
 import bin from './bin'
+import log from './log'
 import inquirer from 'inquirer'
-import Table from 'cli-table'
 import fs from 'fs'
 import path from 'path'
 import clc from 'cli-color'
@@ -10,6 +10,11 @@ import clc from 'cli-color'
 inquirer.registerPrompt('file-tree-selection', require('inquirer-file-tree-selection-prompt'))
 
 export default {
+
+    module: 'Main',
+    log: log.log,
+    error: log.error,
+    notify: log.notify,
 
     async run(){
         let menu = await inquirer.prompt([
@@ -237,11 +242,9 @@ export default {
 
     showCurrentConfig(){
         let config = helper.loadConfig()
-        console.log("Loaded Config")
+        this.log("Loaded Config", 'Main')
 
-        let table = new Table({
-            head: ['key', 'value']
-        })
+        let table = helper.getTable(['Key', 'Value'])
 
         for (const [key, value] of Object.entries(config)) {
             table.push([key, value])
@@ -251,9 +254,7 @@ export default {
     },
 
     showList(files=[]){
-        let table = new Table({
-            head: [ 'id', 'name', 'version', 'size' ]
-        })
+        let table = helper.getTable([ 'id', 'name', 'version', 'size' ])
 
         files.map( file => {
             table.push([file.id, file.name, file.version, file.Size ])

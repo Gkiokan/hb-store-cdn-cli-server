@@ -1,5 +1,6 @@
 import helper from './helper'
 import cli from './cli'
+import log from './log'
 import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
@@ -19,13 +20,10 @@ export default {
         ],
     },
 
-    notify(msg){
-        this.log(clc.green(msg))
-    },
-
-    log(msg){
-        console.log("[Bin] " + msg)
-    },
+    module: 'Bin',
+    log: log.log,
+    error: log.error,
+    notify: log.notify,
 
     async getRelease(){
         let { data } = await axios.get(this.data.source)
@@ -113,7 +111,7 @@ export default {
         let files = []
         assets.map(f => files.push(f.url))
 
-        this.log("Found " + files.length + " to download. Downloading ...", files)
+        this.log("Found " + files.length + " to download. Downloading ...")
 
         await files.map( async file => fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) )
         config.binVersion = version

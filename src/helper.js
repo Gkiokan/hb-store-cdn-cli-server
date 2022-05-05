@@ -3,7 +3,9 @@ import fs from 'fs'
 import path from 'path'
 import ini from 'ini'
 import clc from 'cli-color'
+import Table from 'cli-table'
 import log from './log'
+
 
 export default {
 
@@ -75,7 +77,7 @@ export default {
             config = ini.parse(fs.readFileSync(file, 'utf-8'))
         }
         catch(e){
-            console.log("[Config] Couldn't load config.ini. Please run the Setup or make a config file.")
+            this.log("Couldn't load config.ini. Please run the Setup or make a config file.")
         }
 
         return { ...this.data.default, ...config }
@@ -85,24 +87,23 @@ export default {
         try {
             let file = this.getFile('config.ini')
             fs.writeFileSync(file, ini.stringify({ ...this.default, ...config }) )
-            console.log("[Config] Saved config to " + file)
+            this.log("Saved config to " + file, 'Config')
         }
         catch(e){
-            console.log(e)
+            this.log(e)
         }
     },
 
     init(){
-        let configFile = path.join(path.dirname(process.execPath), 'config.ini')
+        let configFile = this.getFile('config.ini')
 
         if(!fs.existsSync(configFile)){
             this.saveConfig(this.data.default)
-            console.log("[init] empty config.ini has been creatd")
+            this.log("empty config.ini has been creatd", 'Main')
         }
         else {
-            console.log("[init] config.ini already exists")
+            this.log("config.ini already exists", 'Main')
         }
-
     },
 
     getServerState(){
@@ -117,6 +118,15 @@ export default {
 
     getCDN(config){
         return clc.bgWhite.black('CDN Address: http://' + config.host + ':' + config.port + ' ')
-    }
+    },
+
+    getTable(head=[], chars={}){
+        let defaultChars = {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''}
+
+        return new Table({
+            head,
+            chars: { ...defaultChars, ...chars },
+        })
+    },
 
 }

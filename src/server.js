@@ -42,9 +42,6 @@ export default {
     },
 
     sendFiles(){
-        // this.getWindow().webContents.send('server-files', this.files)
-        // #todo render a table of available files
-        // console.log("Found files", this.files)
         if(this.files.count)
           cli.showList(this.files)
 
@@ -55,13 +52,11 @@ export default {
     },
 
     setState(state=null){
-        // this.getWindow().send('server-state', state)
         global.state.server = state
         this.log(clc.cyan("Set Server State to " + state))
     },
 
     updatePS4IP(ip){
-        // this.getWindow().send('update-ps4-ip', ip)
         this.log("I guess we have a ps4 IP here " + ip)
     },
 
@@ -274,8 +269,7 @@ export default {
             this.setState('stopped')
 
             if(e.code === 'EADDRINUSE'){
-              let error = "Port " + this.port + " is already in use. Choose another port and restart the Server"
-              this.error(error)
+              this.error("Port " + this.port + " is already in use. Choose another port and restart the Server")
             }
             else {
               this.error('Error in listening on ' + this.ip + ' at port ' + this.port + ". Error: " + e.code)
