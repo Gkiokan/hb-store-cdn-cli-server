@@ -31,7 +31,7 @@ This is the new HB-Store CDN Server [cli-version].
 
 ## How To  
 Run the binary from your command line and follow the steps.  
-1.) You should first download the Server Binaries
+1.) You should first download the Server Binaries  
 2.) Use the Generate configuration menu to create the config  
 3.) Start the server  
 
