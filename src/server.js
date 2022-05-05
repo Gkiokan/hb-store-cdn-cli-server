@@ -42,7 +42,7 @@ export default {
     },
 
     sendFiles(){
-        if(this.files.count)
+        if(this.files.length)
           cli.showList(this.files)
 
         else
