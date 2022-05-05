@@ -22,11 +22,11 @@ This is the new HB-Store CDN Server [cli-version].
 
 
 ## ToDo  
-- [ ] More Tweaks
-- [ ] Add integrated cluster Support
-- [ ] Supercharge application with pm2  
+- [ ] More Tweaks  
+- [ ] Add integrated cluster Support  
+- [ ] Supercharge application with pm2   
 - [ ] Add Server Ressource overview  
-- [ ] Add dedicated logging
+- [ ] Add dedicated logging  
 
 
 ## How To  
