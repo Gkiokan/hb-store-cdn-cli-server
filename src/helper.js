@@ -123,10 +123,12 @@ export default {
     getTable(head=[], chars={}){
         let defaultChars = {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''}
 
-        return new Table({
+        let table = new Table({
             head,
             chars: { ...defaultChars, ...chars },
         })
+
+        return table
     },
 
 }
