@@ -263,7 +263,7 @@ export default {
         let table = helper.getTable(['Key', 'Value'])
 
         for (const [key, value] of Object.entries(config)) {
-            table.push([key, value])
+            table.push([key + " ", value + " "])
         }
 
         console.log(table.toString())
@@ -273,7 +273,11 @@ export default {
         let table = helper.getTable([ 'id', 'name', 'version', 'size' ])
 
         files.map( file => {
-            table.push([file.id, file.name, file.version, file.Size ])
+            let id = file.id ? file.id + " " : '-'
+            let name = file.name ? file.name + " " : '-'
+            let version = file.version ? file.version + " " : '-'
+            let size = file.Size ? file.Size + " " : '-'
+            table.push([id, name, version, size ])
         })
 
         try {
