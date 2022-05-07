@@ -27,6 +27,10 @@ if(args.includes('init')){
   helper.init()
 }
 
+if(args.includes('start')){
+  cli.startServer()
+}
+
 if(args.length == 0){
   // console.log("[Info] No input specified. Running setup command")
   cli.run()

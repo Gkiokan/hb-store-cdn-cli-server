@@ -251,6 +251,11 @@ export default {
             this.server()
     },
 
+    async startServer(){
+        let config = helper.loadConfig()
+        server.start(config)
+    },
+
     async showCurrentConfig(){
         let config = helper.loadConfig()
         this.log("Loaded Config", 'Main')
@@ -271,7 +276,13 @@ export default {
             table.push([file.id, file.name, file.version, file.Size ])
         })
 
-        console.log(table.toString())
+        try {
+            console.log(table.toString())
+        }
+        catch(e){
+            console.log(clc.red("Could not show the files list. Error accoured."))
+            console.log(e)
+        }
     },
 
 
