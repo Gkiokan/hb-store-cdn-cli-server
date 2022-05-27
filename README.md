@@ -8,7 +8,7 @@
 
 This is the new HB-Store CDN Server [cli-version].
 
-![HB-Store CDN CLI Server](https://pbs.twimg.com/media/FSBAnMuXsAceAGq?format=jpg&name=large)  
+![HB-Store CDN CLI Server](https://user-images.githubusercontent.com/7249224/170506615-8d6ddabd-77f8-44c4-9f9f-57cbc8b4cb5e.png)
 
 
 ## Features  
