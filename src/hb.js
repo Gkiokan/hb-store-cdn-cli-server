@@ -13,7 +13,8 @@ export default {
 
         let item = {
           "pid": pid,
-          "id": data.paramSfo.TITLE_ID,
+          //"id": data.paramSfo.TITLE_ID,
+          "id": data.paramSfo.NPS_TYPE + " " + data.paramSfo.APP_VER + " (" + data.paramSfo.MIN_FW + ")",
           "name": data.paramSfo.TITLE,
           "desc": "",
           "image": "__image",
