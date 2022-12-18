@@ -3,6 +3,7 @@ import path from 'path'
 import fs from 'fs'
 import helper from './helper'
 import db from './db'
+import bin from './bin'
 import server from './server'
 import cli from './cli'
 import clc from 'cli-color'
@@ -27,8 +28,22 @@ if(args.includes('init')){
   helper.init()
 }
 
-if(args.includes('start')){
-  cli.startServer()
+if(args.includes('start')){  
+  // checks server binaires on startup
+  (new Promise( async (resolve, reject) => {
+      await bin.checkServerBinaries()
+      resolve()
+  }))
+  // start the server here
+  .then( () => cli.startServer() )  
+}
+
+if(args.includes('check-bin')){
+  bin.checkServerBinaries()
+}
+
+if(args.includes('download-bin')){
+  bin.forceServerBinariesDownload()
 }
 
 if(args.length == 0){

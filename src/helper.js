@@ -62,6 +62,7 @@ export default {
     },
 
     getFile(asset=''){
+        let pwd = path.dirname(process.execPath)
         return path.join(path.dirname(process.execPath), asset)
     },
 
