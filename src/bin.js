@@ -125,7 +125,11 @@ export default {
 
         this.log("Found " + files.length + " to download. Downloading ...")
 
-        await files.map( async file => await fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) )
+        // await Promise.all( files.map( async file => fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) ) )        
+        for ( const file of files ){
+            fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) 
+        }
+
         config.binVersion = version
         helper.saveConfig(config)
 
@@ -137,13 +141,16 @@ export default {
             this.notify("Found " + zipFiles.length + " Zip Files. Extracting them to " + binPath)
             
             zipFiles.map( file => {
-                let filePath = binPath + '/' + path.basename(file)            
+                let filename = path.basename(file)
+                let filePath = binPath + '/' + filename            
 
                 try {
+                    this.notify("[....] Extracting " + filename)
                     extract(filePath, { dir: binPath })
+                    this.notify("[done] Extracting " + filename)
                 }
                 catch(e){
-                    this.error(cli.red("Error Extracting file " + path.basename(file)) )
+                    this.error(cli.red("Error Extracting file " + filename) )
                 }
             })
         }
