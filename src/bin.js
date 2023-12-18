@@ -6,6 +6,7 @@ import fs from 'fs'
 import path from 'path'
 import download from 'download'
 import clc from 'cli-color'
+import extract from 'extract-zip'
 
 export default {
     updateAvailable: false,
@@ -16,7 +17,9 @@ export default {
         files: [
             'homebrew.elf',
             'homebrew.elf.sig',
-            'remote.md5'
+            'remote.md5',
+            'store.prx',
+            'store.prx.sig',
         ],
     },
 
@@ -127,6 +130,23 @@ export default {
         helper.saveConfig(config)
 
         this.notify("Download finished.")
+
+        // check for zip files 
+        let zipFiles = files.filter( f => f.includes('.zip'))
+        if( zipFiles.length != 0 ){
+            this.notify("Found " + zipFiles.length + " Zip Files. Extracting them to " + binPath)
+            
+            zipFiles.map( file => {
+                let filePath = binPath + '/' + path.basename(file)            
+
+                try {
+                    extract(filePath, { dir: binPath })
+                }
+                catch(e){
+                    this.error(cli.red("Error Extracting file " + path.basename(file)) )
+                }
+            })
+        }
     },
 
 }

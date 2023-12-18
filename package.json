@@ -1,6 +1,6 @@
 {
   "name": "hb-store-cdn-cli-server",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "HB-Store CDN Server CLI Edition",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -48,6 +48,7 @@
     "cli-table": "^0.3.11",
     "download": "^8.0.0",
     "express": "^4.18.1",
+    "extract-zip": "^2.0.1",
     "fast-glob": "^3.2.11",
     "figlet": "^1.5.2",
     "ini": "^3.0.0",
