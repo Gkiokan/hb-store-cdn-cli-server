@@ -6,6 +6,7 @@ import fs from 'fs'
 import path from 'path'
 import download from 'download'
 import clc from 'cli-color'
+import extract from 'extract-zip'
 
 export default {
     updateAvailable: false,
@@ -16,7 +17,9 @@ export default {
         files: [
             'homebrew.elf',
             'homebrew.elf.sig',
-            'remote.md5'
+            'remote.md5',
+            'store.prx',
+            'store.prx.sig',
         ],
     },
 
@@ -122,11 +125,35 @@ export default {
 
         this.log("Found " + files.length + " to download. Downloading ...")
 
-        await files.map( async file => await fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) )
+        // await Promise.all( files.map( async file => fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) ) )        
+        for ( const file of files ){
+            fs.writeFileSync(binPath + '/' + path.basename(file), await download(file)) 
+        }
+
         config.binVersion = version
         helper.saveConfig(config)
 
         this.notify("Download finished.")
+
+        // check for zip files 
+        let zipFiles = files.filter( f => f.includes('.zip'))
+        if( zipFiles.length != 0 ){
+            this.notify("Found " + zipFiles.length + " Zip Files. Extracting them to " + binPath)
+            
+            zipFiles.map( file => {
+                let filename = path.basename(file)
+                let filePath = binPath + '/' + filename            
+
+                try {
+                    this.notify("[....] Extracting " + filename)
+                    extract(filePath, { dir: binPath })
+                    this.notify("[done] Extracting " + filename)
+                }
+                catch(e){
+                    this.error(cli.red("Error Extracting file " + filename) )
+                }
+            })
+        }
     },
 
 }

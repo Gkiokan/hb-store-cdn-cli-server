@@ -4,6 +4,7 @@ import fs from 'fs'
 import fg from 'fast-glob'
 import path from 'path'
 import hb from './hb'
+import bin from './bin'
 import db from './db'
 import cli from './cli'
 import log from './log'
@@ -136,7 +137,7 @@ export default {
         })
 
         // load server binaries
-        for (const asset of ['homebrew.elf', 'homebrew.elf.sig', 'remote.md5'])
+        for (const asset of bin.data.files)
           this.host.router.get('/update/' + asset, function(request, response){
               let file = helper.getFile('bin/' + asset)
               response.status(200).download(file, asset)
