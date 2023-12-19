@@ -21,7 +21,7 @@ This is the new HB-Store CDN Server [cli-version].
 - [x] Public Domain Host support  
 - [x] Auto check Server Binaries on Server Start 
 - [x] Added [retroNAS](https://github.com/danmons/retronas) Support (v1.3.0+)
-
+- [x] Added PS5 Support (v1.4.1+)  
 
 ## ToDo  
 - [ ] More Tweaks  
