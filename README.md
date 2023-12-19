@@ -52,7 +52,7 @@ Run the binary from your command line and follow the steps.
 Command | Description 
 --- | ---
 `./hb-store-cli-server` | Starts the Default Server with Interactive Menu
-`./hb-store-cli-server start` | Starts the Server with the pre-configured config.ini
+`./hb-store-cli-server start` | Downloads binary files automatically and starts the Server with the pre-configured config.ini
 `./hb-store-cli-server init` | Creates a empty basic config.ini file
 `./hb-store-cli-server setup` | Starts the Interactive Menu, equal to no params 
 `./hb-store-cli-server check-bin` | Checks Binaries for update and downloads them  
