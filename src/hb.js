@@ -10,10 +10,22 @@ export default {
         let patchedFilename = (file.charAt(0) == "/") ? file.substr(1).replace(/[^a-zA-Z0-9-_./]/g, '') : file.replace(/[^a-zA-Z0-9-_./]/g, '')
         let stats = fs.lstatSync(file)
         let size = this.formatBytes(stats.size, 2)
-
+        let minfw = ((data.paramSfo.SYSTEM_VER >> 24) & 0xff).toString().substring(0,2) + "." + ((data.paramSfo.SYSTEM_VER >> 16) & 0xff).toString().substring(0,2)
+        let pkgtype = "Unknown"
+        let id = data.paramSfo.TITLE_ID
+        if (data.paramSfo.CATEGORY == "gd") {
+          id = "Base_Game_" + parseFloat(data.paramSfo.APP_VER).toFixed(2) + "_(Fw_" + minfw + ")_" + data.paramSfo.TITLE_ID
+          pkgtype = "Base Game"
+        } else if (data.paramSfo.CATEGORY == "gp") {
+          id = "Update_" + parseFloat(data.paramSfo.APP_VER).toFixed(2) + "_(Fw_" + minfw + ")_" + data.paramSfo.TITLE_ID
+          pkgtype = "Update"
+        } else if (data.paramSfo.CATEGORY == "ac") {
+          id = "DLC_" + data.paramSfo.TITLE_ID
+          pkgtype = "DLC"
+        }
         let item = {
           "pid": pid,
-          "id": data.paramSfo.TITLE_ID,
+          "id": id,
           "name": data.paramSfo.TITLE,
           "desc": "",
           "image": "__image",
@@ -25,7 +37,7 @@ export default {
           "ReviewStars": "Custom Rating",
           "Size": size,
           "Author": "HB-Store CDN",
-          "apptype": "HB Game",
+          "apptype": pkgtype,
           "pv": "5.05+",
           "main_icon_path": "__image",
           "main_menu_pic": "/user/app/NPXS39041/storedata/" + data.paramSfo.TITLE_ID + ".png",
